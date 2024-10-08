@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://Moh:Pett22@cluster.5hmpb.mongodb.net/Cluster?retryWrites=true&w=majority', {
+mongoose.connect({
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
