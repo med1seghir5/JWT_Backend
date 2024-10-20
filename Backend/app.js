@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const connectDB = require('./DB/Db');
-
+const medicamentRoutes = require('./routes/authRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 
@@ -15,6 +15,7 @@ app.use(cookieParser());
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/api', medicamentRoutes);
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");

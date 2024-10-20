@@ -20,23 +20,29 @@ const PersonsSchema = new Schema({
 
 const Person = mongoose.model('Person', PersonsSchema);
 
-// Refresh Token Schema
-const RefreshTokenSchema = new Schema({
-    token: {
-        type: String,
-        required: true
+// Medicament Schema
+const MedicamentSchema = new mongoose.Schema({
+    name:{
+        type: 'string',
     },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Person',
-        required: true
-    },
-    expiresAt: {
+
+    AriDate:{
         type: Date,
-        required: true
+        default: Date.now
+    },
+
+    ExpDate:{
+        type: Date,
+        default: Date.now,
+        expires: 3600 * 24 * 30
+    },
+
+    Quant:{
+        type: Number,
+        default: 0
     }
 });
 
-const RefreshToken = mongoose.model('RefreshToken', RefreshTokenSchema);
+const Medicament = mongoose.model('Medicament', MedicamentSchema);
 
-module.exports = { Person, RefreshToken };
+module.exports = { Person, Medicament };
