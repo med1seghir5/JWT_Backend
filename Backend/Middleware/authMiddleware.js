@@ -18,7 +18,7 @@ exports.authenticateToken = async (req, res, next) => {
             if (!foundUser) {
                 return res.status(401).json({ message: 'User not found' });
             }
-            req.user = foundUser; // Attachez l'utilisateur trouvé à la requête
+            req.user = foundUser;
             next();
         } catch (error) {
             return res.status(500).json({ error: error.message });

@@ -74,11 +74,11 @@ exports.login = async (req, res) => {
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      maxAge: 2 * 60 * 1000,
+      maxAge: 10 * 60 * 1000,
     });
     res.cookie("refreshToken", refrshToken, {
       httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 15 * 24 * 60 * 60 * 1000,
     });
 
     res.json({
@@ -117,3 +117,18 @@ exports.refreshToken = (req, res) => {
     res.json({ message: "Access token refreshed successfully" });
   });
 };
+
+// currentUser
+exports.currentUser = (req, res) => {
+  const accessToken = req.cookies.accessToken;
+  if (!accessToken) {
+    return res.status(401).json({ message: "Accès refusé. Aucun token fourni." });
+  }
+
+  jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: "Token invalide ou expiré." });
+
+    res.json({ currentUser: { userId: user.userId, username: user.username } });
+  });
+};
+

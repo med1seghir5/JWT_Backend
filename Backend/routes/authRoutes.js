@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, logout, refreshToken } = require('../Controller/authConrtoller');
+const { register, login, logout, refreshToken, currentUser } = require('../Controller/authConrtoller');
 const { requireAuth } = require('../Middleware/authMiddleware');
 
 const router = express.Router();
@@ -12,5 +12,7 @@ router.post('/login', login);
 router.post('/logout', logout);
 //Token Route
 router.post('/token', refreshToken);
+//Current User Route
+router.get("/current-user", currentUser);
 
 module.exports = router;

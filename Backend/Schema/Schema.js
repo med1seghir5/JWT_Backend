@@ -3,14 +3,13 @@ const mongoose = require('mongoose');
 // Extraire Schema depuis mongoose
 const { Schema } = mongoose;
 
-//Users Schema
+// Users Schema
 const PersonsSchema = new Schema({
     Username: {
         type: String,
         required: true,
         unique: true
     },
-
     Password: {
         type: String,
         required: true,
@@ -21,26 +20,37 @@ const PersonsSchema = new Schema({
 const Person = mongoose.model('Person', PersonsSchema);
 
 // Medicament Schema
-const MedicamentSchema = new mongoose.Schema({
-    name:{
-        type: 'string',
+const MedicamentSchema = new Schema({
+    type: {
+        type: String,
+        required: true
     },
-
-    AriDate:{
+    name: {
+        type: String,
+        required: true
+    },
+    AriDate: {
         type: Date,
         default: Date.now
     },
-
-    ExpDate:{
+    ExpDate: {
         type: Date,
         default: Date.now,
         expires: 3600 * 24 * 30
     },
-
-    Quant:{
+    Quant: {
         type: Number,
         default: 0
+    },
+    OnePrice: {
+        type: Number,
+        required: true
     }
+});
+
+// Getter virtuel pour TotalPrice
+MedicamentSchema.virtual('TotalPrice').get(function() {
+    return this.Quant * this.OnePrice;
 });
 
 const Medicament = mongoose.model('Medicament', MedicamentSchema);
